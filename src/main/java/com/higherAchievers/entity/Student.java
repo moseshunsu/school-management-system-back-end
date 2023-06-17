@@ -1,8 +1,8 @@
-package entity;
+package com.higherAchievers.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import utils.Gender;
+import com.higherAchievers.utils.Gender;
 
 import java.time.LocalDate;
 import java.util.List;

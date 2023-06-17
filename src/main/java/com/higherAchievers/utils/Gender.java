@@ -1,4 +1,4 @@
-package utils;
+package com.higherAchievers.utils;
 
 public enum Gender {
     MALE,
