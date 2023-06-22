@@ -21,15 +21,13 @@ import java.util.List;
 @Table(name = "students")
 public class Student {
 
-
-
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO, generator="native")
     @GenericGenerator(name = "native")
     @Column(name = "student_id")
     private long id;
 
-    @Column(updatable = false, nullable = false)
+    @Column(nullable = false)
     private Gender gender;
 
     @Column(name = "first_name", nullable = false)
