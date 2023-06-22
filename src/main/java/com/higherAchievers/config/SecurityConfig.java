@@ -2,12 +2,12 @@ package com.higherAchievers.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -17,7 +17,9 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests( requests -> requests
-                .requestMatchers("/register-student").hasRole("teacher"))
+                .requestMatchers("/register-student").hasRole("TEACHER")
+                .requestMatchers(HttpMethod.POST, "/register-teacher").permitAll()
+                .requestMatchers(HttpMethod.GET, "/register-teacher").hasRole("TEACHER"))
                 .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
 
@@ -25,14 +27,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        UserDetails moses = User.withDefaultPasswordEncoder()
-                .username("moses")
-                .password("12345")
-                .roles("teacher")
-                .build();
-
-        return new InMemoryUserDetailsManager(moses);
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
