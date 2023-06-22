@@ -1,12 +1,12 @@
 package com.higherAchievers.entity;
 
-import com.higherAchievers.utils.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Builder
 @Setter
@@ -36,13 +36,19 @@ public class Teacher {
     @Column(nullable = false, unique = true)
     private String email;
 
-    private Set<String> qualifications;
+    @Column(nullable = false)
+    private String qualifications;
 
-    private Set<String> roles;
+    @Column(name = "roles")
+    private String role;
 
     @Column(nullable = false)
-    private Gender gender;
+    private String gender;
 
+    @Column(unique = true)
+    private String username;
+
+    @Column(nullable = false, length = 100)
     private String password;
 
     @Column(name = "date_of_birth", nullable = false)
@@ -59,5 +65,9 @@ public class Teacher {
 
     @Column(name = "date_joined")
     private LocalDate dateJoined;
+
+    @Column(name = "last_modified_at")
+    @UpdateTimestamp
+    private LocalDateTime modifiedAt;
 
 }

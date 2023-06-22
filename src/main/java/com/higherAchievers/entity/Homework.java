@@ -31,6 +31,6 @@ public class Homework {
     private String otherHomeworkDetails;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "id")
+    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     private Student student;
 }

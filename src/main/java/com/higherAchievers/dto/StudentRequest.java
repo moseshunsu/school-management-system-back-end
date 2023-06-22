@@ -1,7 +1,6 @@
 package com.higherAchievers.dto;
 
 import com.higherAchievers.utils.Gender;
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.time.LocalDate;
