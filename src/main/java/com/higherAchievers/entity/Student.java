@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import com.higherAchievers.utils.Gender;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
@@ -20,8 +21,12 @@ import java.util.List;
 @Table(name = "students")
 public class Student {
 
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO, generator="native")
+    @GenericGenerator(name = "native")
+    @Column(name = "student_id")
     private long id;
 
     @Column(updatable = false, nullable = false)
@@ -50,10 +55,11 @@ public class Student {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at")
+    @Column(name = "last_modified_at")
     private LocalDateTime modifiedAt;
 
     @ToString.Exclude
+    @Column(name = "assignments")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "student")
     private List<Homework> homework;
 
